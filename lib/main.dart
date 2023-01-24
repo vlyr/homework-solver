@@ -1,7 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
-import 'vision_detector_views/text_detector_view.dart';
+import 'text_detector_view.dart';
 
 List<CameraDescription> cameras = [];
 
@@ -33,33 +33,6 @@ class Home extends StatelessWidget {
         elevation: 0,
       ),
       body: TextRecognizerView(),
-      /*body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                children: [
-                  ExpansionTile(
-                    title: const Text('Vision APIs'),
-                    children: [
-                      CustomCard('Text Recognition', TextRecognizerView()),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  ExpansionTile(
-                    title: const Text('Natural Language APIs'),
-                    children: [
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),*/
     );
   }
 }

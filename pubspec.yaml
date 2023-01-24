@@ -17,6 +17,7 @@ dependencies:
   google_mlkit_commons: ^0.2.0
   google_mlkit_language_id: ^0.5.0
   google_mlkit_text_recognition: ^0.5.0
+  chat_gpt_sdk: ^1.0.2+1
 
 dev_dependencies:
   flutter_lints: ^2.0.1

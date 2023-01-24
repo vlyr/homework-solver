@@ -10,7 +10,7 @@ class TextRecognizerPainter extends CustomPainter {
   TextRecognizerPainter(
       this.recognizedText, this.absoluteImageSize, this.rotation);
 
-  final RecognizedText recognizedText;
+  final String recognizedText;
   final Size absoluteImageSize;
   final InputImageRotation rotation;
 
@@ -23,7 +23,6 @@ class TextRecognizerPainter extends CustomPainter {
 
     final Paint background = Paint()..color = Color(0x99000000);
 
-    for (final textBlock in recognizedText.blocks) {
       final ParagraphBuilder builder = ParagraphBuilder(
         ParagraphStyle(
             textAlign: TextAlign.left,
@@ -32,31 +31,8 @@ class TextRecognizerPainter extends CustomPainter {
       );
       builder.pushStyle(
           ui.TextStyle(color: Colors.lightGreenAccent, background: background));
-      builder.addText(textBlock.text);
+      builder.addText(recognizedText);
       builder.pop();
-
-      final left = translateX(
-          textBlock.boundingBox.left, rotation, size, absoluteImageSize);
-      final top = translateY(
-          textBlock.boundingBox.top, rotation, size, absoluteImageSize);
-      final right = translateX(
-          textBlock.boundingBox.right, rotation, size, absoluteImageSize);
-      final bottom = translateY(
-          textBlock.boundingBox.bottom, rotation, size, absoluteImageSize);
-
-      canvas.drawRect(
-        Rect.fromLTRB(left, top, right, bottom),
-        paint,
-      );
-
-      canvas.drawParagraph(
-        builder.build()
-          ..layout(ParagraphConstraints(
-            width: right - left,
-          )),
-        Offset(left, top),
-      );
-    }
   }
 
   @override

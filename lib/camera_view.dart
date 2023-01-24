@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../main.dart';
+import './main.dart';
 
 enum ScreenMode { liveFeed, gallery }
 
@@ -14,7 +14,7 @@ class CameraView extends StatefulWidget {
   CameraView(
       {Key? key,
       required this.title,
-      required this.customPaint,
+      this.customPaint,
       this.text,
       required this.onImage,
       this.onScreenModeChanged,
@@ -33,7 +33,7 @@ class CameraView extends StatefulWidget {
 }
 
 class _CameraViewState extends State<CameraView> {
-  ScreenMode _mode = ScreenMode.liveFeed;
+  ScreenMode _mode = ScreenMode.gallery;
   CameraController? _controller;
   File? _image;
   String? _path;
@@ -67,12 +67,6 @@ class _CameraViewState extends State<CameraView> {
         }
       }
     }
-
-    if (_cameraIndex != -1) {
-      _startLiveFeed();
-    } else {
-      _mode = ScreenMode.gallery;
-    }
   }
 
   @override
@@ -84,7 +78,7 @@ class _CameraViewState extends State<CameraView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      /*appBar: AppBar(
         title: Text(widget.title),
         actions: [
           if (_allowPicker)
@@ -102,7 +96,7 @@ class _CameraViewState extends State<CameraView> {
               ),
             ),
         ],
-      ),
+      ),*/
       body: _body(),
       floatingActionButton: _floatingActionButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -194,7 +188,7 @@ class _CameraViewState extends State<CameraView> {
   Widget _galleryBody() {
     return ListView(shrinkWrap: true, children: [
       _image != null
-          ? SizedBox(
+          ? Column(children: [SizedBox(
               height: 400,
               width: 400,
               child: Stack(
@@ -204,7 +198,8 @@ class _CameraViewState extends State<CameraView> {
                   if (widget.customPaint != null) widget.customPaint!,
                 ],
               ),
-            )
+            ),
+            Text(widget.text!)])
           : Icon(
               Icons.image,
               size: 200,
@@ -237,10 +232,12 @@ class _CameraViewState extends State<CameraView> {
       _image = null;
       _path = null;
     });
+
     final pickedFile = await _imagePicker?.pickImage(source: source);
     if (pickedFile != null) {
       _processPickedFile(pickedFile);
     }
+
     setState(() {});
   }
 
